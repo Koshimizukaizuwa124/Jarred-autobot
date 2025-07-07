@@ -35,38 +35,41 @@ module.exports.config = {
     usage: "[remini]",
     cooldown: 20,
 };
-
-module.exports.run = async function({ api, event }) {
-    try {
-        if (!event.messageReply || !event.messageReply.attachments || event.messageReply.attachments.length === 0) {
-            return api.sendMessage(formatFont("Please reply to an image with this command to enhance it."), event.threadID);
-        }
-
-        const attachment = event.messageReply.attachments[0];
-
-        if (attachment.type !== 'photo') {
-            return api.sendMessage(formatFont("Please reply to a valid image to enhance."), event.threadID);
-        }
-
-        const imageUrl = attachment.url;
-        const apiUrl = `https://jonellprojectccapisexplorer.onrender.com/api/remini?imageUrl=${encodeURIComponent(imageUrl)}`;
-
-        api.sendMessage(formatFont("Enhancing the image, please wait..."), event.threadID);
-
-        const response = await axios.get(apiUrl);
-        const enhancedImagePath = path.join(__dirname, "cache", "enhancedImage.png");
-
-        const imageResponse = await axios.get(response.data.image_data, { responseType: 'arraybuffer' });
-        fs.writeFileSync(enhancedImagePath, imageResponse.data);
-
-        api.sendMessage({
-            body: formatFont("Here is your enhanced image:"),
-            attachment: fs.createReadStream(enhancedImagePath)
-        }, event.threadID, () => {
-            fs.unlinkSync(enhancedImagePath);
-        });
-
-    } catch (error) {
-        api.sendMessage(formatFont("An error occurred while processing the request."), event.threadID);
-    }
+module.exports.config = {
+    name: "remini",
+    version: "1.0.0",
+    hasPermssion: 0,
+    credits: "Who's Deku",
+    description: "Remini filter",
+    commandCategory: "...",
+    usages: "[reply to image or image url]",
+    cooldowns: 1,
 };
+const axios = require("axios")
+const fs = require("fs");
+module.exports.run = async function({ api, event, args }) {
+const { threadID, messageID } = event;
+if (event.type == "message_reply"){
+var t = event.messageReply.attachments[0].url
+} else {
+ var t = args.join(" ");
+}
+try {
+api.sendMessage("Generating...", threadID, messageID);
+    const r = await axios.get("https://free-api.ainz-sama101.repl.co/canvas/remini?", {
+                params: {
+                    url: encodeURI(t)
+    }
+});
+const result = r.data.result.image_data;
+    let ly = __dirname+"/cache/anime.png";
+    let ly1 = (await axios.get(result, {
+    responseType: "arraybuffer"
+  })).data;
+  fs.writeFileSync(ly, Buffer.from(ly1, "utf-8"));
+    return api.sendMessage({attachment: fs.createReadStream(ly)}, threadID, () => fs.unlinkSync(ly), messageID)
+  } catch (e){
+        console.log(e.message);
+          return api.sendMessage("Something went wrong.\n"+e.message, threadID, messageID)
+   }
+}
