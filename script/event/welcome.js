@@ -32,13 +32,13 @@ module.exports.handleEvent = async function ({ api, event }) {
             fs.writeFileSync(filePath, Buffer.from(data));
 
             api.sendMessage({
-                body: `Everyone welcome the new member ${name} to ${groupName}!`,
+                body: `Everyone let's welcome our new member${name} to ${groupName}!`,
                 attachment: fs.createReadStream(filePath)
             }, event.threadID, () => fs.unlinkSync(filePath));
         } catch (error) {
             console.error("Error fetching welcome image:", error);
             api.sendMessage({
-                body: `Everyone welcome the new member ${name} to ${groupName}!`
+                body: ``Everyone let's welcome our new member ${name} to ${groupName}!`
             }, event.threadID);
         }
     }
