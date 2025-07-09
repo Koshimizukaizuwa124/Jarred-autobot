@@ -52,8 +52,7 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
       const start = (page - 1) * commandsPerPage;
       const end = Math.min(start + commandsPerPage, totalCommands);
 
-      let helpMessage = formatFont
-╭──────༺♡༻──────╮
+      let helpMessage = formatFont╭──────༺♡༻──────╮
     𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗟𝗜𝗦𝗧
 ╰──────༺♡༻──────╯
 \n\n`);
@@ -75,8 +74,7 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
     }
     // Show all commands
     else if (input === 'all') {
-      let helpMessage = formatFont
-╭──────༺♡༻──────╮
+      let helpMessage = formatFont╭──────༺♡༻──────╮
     𝗔𝗟𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦
 ╰──────༺♡༻──────╯
 \n\n`);
