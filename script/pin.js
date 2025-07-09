@@ -26,7 +26,13 @@ module.exports.languages = {
     error: "❌ Error occurred while fetching image.",
     noResult: "😿 No results found for this query."
   },
-  
+  vi: {
+    missingKeyword: "⚠️ Please enter a search keyword.",
+    error: "❌ Error occurred while fetching image.",
+    noResult: "😿 No results found for this query."
+  }
+};
+
 // 📥 Download Image and Return Stream
 async function downloadImage(url) {
   const tempFile = path.join(os.tmpdir(), `${Date.now()}.jpg`);
