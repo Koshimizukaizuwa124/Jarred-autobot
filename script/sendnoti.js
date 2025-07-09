@@ -1,4 +1,4 @@
-const axios = require("axios");
+ const axios = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
 
@@ -23,9 +23,9 @@ module.exports.run = async function ({ api, event, args, admin }) {
   async function sendMessage(thread) {
     try {
       await api.sendMessage(
-`╭┈ ❒ 𝗡𝗢𝗧𝗜 𝗙𝗥𝗢𝗠 𝗔𝗗𝗠𝗜𝗡 
-│
-╰┈➤ ${custom}`,
+`𝗙𝗥𝗢𝗠 𝗦𝗨𝗣𝗘𝗥 𝗔𝗗𝗠𝗜𝗡
+━━━━━━━━━━━━━━━
+${custom}`,
         thread.threadID
       );
       sentCount++;
