@@ -52,10 +52,11 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
       const start = (page - 1) * commandsPerPage;
       const end = Math.min(start + commandsPerPage, totalCommands);
 
-      let helpMessage = formatFont╭──────༺♡༻──────╮
-    𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗟𝗜𝗦𝗧
-╰──────༺♡༻──────╯
-\n\n`);
+      let helpMessage = formatFont(`♡   ∩_∩
+     („• ֊ •„)♡
+╔═∪∪═════════╗
+  ♡ 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙻𝙸𝚂𝚃 ♡
+╚════════════╝\n\n`);
 
       for (let i = start; i < end; i++) {
         helpMessage += formatFont(`⊂⊃ ➠ ${prefix}${commands[i]}\n`);
@@ -74,10 +75,10 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
     }
     // Show all commands
     else if (input === 'all') {
-      let helpMessage = formatFont╭──────༺♡༻──────╮
-    𝗔𝗟𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦
-╰──────༺♡༻──────╯
-\n\n`);
+      let helpMessage = formatFont(`(„• ֊ •„)♡
+╔═∪∪═════════╗
+  ♡ 𝙰𝙻𝙻 𝙲𝙾𝙼𝙼𝙰𝙽𝙳'𝚂 ♡
+╚════════════╝\n\n`);
       commands.forEach((command) => {
         helpMessage += formatFont(`⊂⊃ ➠ ${prefix}${command}\n`);
       });
@@ -134,4 +135,4 @@ module.exports.handleEvent = async function({
 if (body?.toLowerCase().startsWith('prefix')) {
   api.sendMessage(message, threadID, messageID);
 }
-    }
+        }
