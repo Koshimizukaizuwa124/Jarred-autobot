@@ -41,4 +41,4 @@ module.exports.run = async function({ api, event, args, getText }) {
 	const newName = name.replace(event.mentions[mention], "").trim();
 	await api.changeNickname(newName, event.threadID, mention);
 	return api.sendMessage(getText("targetChange", event.mentions[mention].replace(/@/g, "").trim(), newName), event.threadID, event.messageID);
-};
+}
