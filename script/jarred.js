@@ -1,4 +1,4 @@
-const axios = require('axios');
+ const axios = require('axios');
 
 let fontEnabled = true;
 
@@ -13,7 +13,7 @@ function formatFont(text) {
 }
 
 module.exports.config = {
-  name: 'nathz',
+  name: 'jarred',
   version: '1.0.0',
   role: 0,
   hasPrefix: false,
@@ -34,7 +34,7 @@ module.exports.run = async function ({ api, event, args }) {
     return api.sendMessage(formatFont("❌ Please enter a message to send to Gemma."), threadID, messageID);
   }
 
-  api.sendMessage(formatFont("🤖 𝗡𝗔𝗧𝗛𝗭 𝗜𝗦 𝗧𝗛𝗜𝗡𝗞𝗜𝗡𝗚..."), threadID, async (err, info) => {
+  api.sendMessage(formatFont("🤖 𝗝𝗔𝗥𝗥𝗘𝗗 𝗜𝗦 𝗧𝗛𝗜𝗡𝗞𝗜𝗡𝗚..."), threadID, async (err, info) => {
     if (err) return;
 
     try {
@@ -49,7 +49,7 @@ module.exports.run = async function ({ api, event, args }) {
         const timePH = new Date(Date.now() + 8 * 60 * 60 * 1000).toLocaleString('en-US', { hour12: false });
 
         const replyMessage = `
-🤖 𝗡𝗔𝗧𝗛𝗭 𝗕𝗢𝗧𝗭 ☆
+🤖 𝗝𝗔𝗥𝗥𝗘𝗗 𝗕𝗢𝗧𝗭☆
 ━━━━━━━━━━━━━━━━━━
 ${responseText.trim()}
 ━━━━━━━━━━━━━━━━━━
