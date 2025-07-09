@@ -54,7 +54,7 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
 
       let helpMessage = formatFont
 ╭──────༺♡༻──────╮
-  𝗝𝗔𝗥𝗥𝗘𝗗𝗭 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦
+    𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗟𝗜𝗦𝗧
 ╰──────༺♡༻──────╯
 \n\n`);
 
@@ -77,7 +77,7 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
     else if (input === 'all') {
       let helpMessage = formatFont
 ╭──────༺♡༻──────╮
-𝗝𝗔𝗥𝗥𝗘𝗗𝗭 𝗔𝗟𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦
+    𝗔𝗟𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦
 ╰──────༺♡༻──────╯
 \n\n`);
       commands.forEach((command) => {
@@ -136,4 +136,4 @@ module.exports.handleEvent = async function({
 if (body?.toLowerCase().startsWith('prefix')) {
   api.sendMessage(message, threadID, messageID);
 }
-                                                                                                  }
+    }
