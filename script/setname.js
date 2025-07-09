@@ -9,12 +9,23 @@ module.exports.config = {
 	cooldowns: 3
 };
 
-module.exports.languages =},
+module.exports.languages = {
+	"vi": {
+		"selfChange": "Đã đổi biệt danh của bạn thành: %1",
+		"targetChange": "Đã đổi biệt danh của %1 thành: %2",
+		"missingName": "Vui lòng nhập biệt danh muốn đặt."
+	},
 	"en": {
 		"selfChange": "Changed your nickname to: %1",
 		"targetChange": "Changed %1's nickname to: %2",
 		"missingName": "Please enter the nickname you want to set."
-	};
+	},
+	"ar": {
+		"selfChange": "تم تغيير لقبك إلى: %1",
+		"targetChange": "تم تغيير لقب %1 إلى: %2",
+		"missingName": "من فضلك أدخل اللقب الذي تريد تعيينه."
+	}
+};
 
 module.exports.run = async function({ api, event, args, getText }) {
 	const name = args.join(" ");
