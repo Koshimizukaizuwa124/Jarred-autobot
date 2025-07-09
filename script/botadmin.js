@@ -1,116 +1,85 @@
 module.exports.config = {
-	name: "botadmin",
-	version: "1.0.5",
-	hasPermssion: 0,
-	credits: "Mirai Team",
-	description: "Quản lý admin bot",
-	commandCategory: "config",
-	usages: "[list/add/remove] [userID]",
-    cooldowns: 5,
-    dependencies: {
-        "fs-extra": ""
-    }
+  name: "adc",
+  version: "1.0.0",
+  role: 3,
+  hasPrefix: true,
+  usage: '[reply or text]',
+  description: 'Apply code from buildtooldev and pastebin',
+  credits: 'Deveploper',
+  cooldown: 5
 };
-
-module.exports.languages = {
-    "vi": {
-        "listAdmin": '[Admin] Danh sách toàn bộ người điều hành bot: \n\n%1',
-        "notHavePermssion": '[Admin] Bạn không đủ quyền hạn để có thể sử dụng chức năng "%1"',
-        "addedNewAdmin": '[Admin] Đã thêm %1 người dùng trở thành người điều hành bot:\n\n%2',
-        "removedAdmin": '[Admin] Đã gỡ bỏ %1 người điều hành bot:\n\n%2'
-    },
-    "en": {
-        "listAdmin": '[Admin] Admin list: \n\n%1',
-        "notHavePermssion": '[Admin] You have no permission to use "%1"',
-        "addedNewAdmin": '[Admin] Added %1 Admin :\n\n%2',
-        "removedAdmin": '[Admin] Remove %1 Admin:\n\n%2'
-    }
-}
-
-module.exports.run = async function ({ api, event, args, Users, permssion, getText }) {
-    const content = args.slice(1, args.length);
-    const { threadID, messageID, mentions } = event;
-    const { configPath } = global.client;
-    const { ADMINBOT } = global.config;
-    const { userName } = global.data;
-    const { writeFileSync } = global.nodemodule["fs-extra"];
-    const mention = Object.keys(mentions);
-
-    delete require.cache[require.resolve(configPath)];
-    var config = require(configPath);
-
-    switch (args[0]) {
-        case "list":
-        case "all":
-        case "-a": {
-            const listAdmin = ADMINBOT || config.ADMINBOT || [];
-            var msg = [];
-
-            for (const idAdmin of listAdmin) {
-                if (parseInt(idAdmin)) {
-                    const name = await Users.getNameUser(idAdmin);
-                    msg.push(`- ${name}(https://facebook.com/${idAdmin})`);
-                }
-            }
-
-            return api.sendMessage(getText("listAdmin", msg.join("\n")), threadID, messageID);
-        }
-
-        case "add": {
-            if (permssion != 2) return api.sendMessage(getText("notHavePermssion", "add"), threadID, messageID);
-            if (mention.length != 0 && isNaN(content[0])) {
-                var listAdd = [];
-
-                for (const id of mention) {
-                    ADMINBOT.push(id);
-                    config.ADMINBOT.push(id);
-                    listAdd.push(`[ ${id} ] » ${event.mentions[id]}`);
-                };
-
-                writeFileSync(configPath, JSON.stringify(config, null, 4), 'utf8');
-                return api.sendMessage(getText("addedNewAdmin", mention.length, listAdd.join("\n").replace(/\@/g, "")), threadID, messageID);
-            }
-            else if (content.length != 0 && !isNaN(content[0])) {
-                ADMINBOT.push(content[0]);
-                config.ADMINBOT.push(content[0]);
-                const name = await Users.getNameUser(content[0]);
-                writeFileSync(configPath, JSON.stringify(config, null, 4), 'utf8');
-                return api.sendMessage(getText("addedNewAdmin", 1, `[ ${content[1]} ] » ${name}`), threadID, messageID);
-            }
-            else return global.utils.throwError(this.config.name, threadID, messageID);
-        }
-
-        case "remove":
-        case "rm":
-        case "delete": {
-            if (permssion != 2) return api.sendMessage(getText("notHavePermssion", "delete"), threadID, messageID);
-            if (mentions.length != 0 && isNaN(content[0])) {
-                const mention = Object.keys(mentions);
-                var listAdd = [];
-
-                for (const id of mention) {
-                    const index = config.ADMINBOT.findIndex(item => item == id);
-                    ADMINBOT.splice(index, 1);
-                    config.ADMINBOT.splice(index, 1);
-                    listAdd.push(`[ ${id} ] » ${event.mentions[id]}`);
-                };
-
-                writeFileSync(configPath, JSON.stringify(config, null, 4), 'utf8');
-                return api.sendMessage(getText("removedAdmin", mention.length, listAdd.join("\n").replace(/\@/g, "")), threadID, messageID);
-            }
-            else if (content.length != 0 && !isNaN(content[0])) {
-                const index = config.ADMINBOT.findIndex(item => item.toString() == content[0]);
-                ADMINBOT.splice(index, 1);
-                config.ADMINBOT.splice(index, 1);
-                const name = await Users.getNameUser(content[0]);
-                writeFileSync(configPath, JSON.stringify(config, null, 4), 'utf8');
-                return api.sendMessage(getText("removedAdmin", 1, `[ ${content[0]} ] » ${name}`), threadID, messageID);
-            }
-            else global.utils.throwError(this.config.name, threadID, messageID);
-        }
-
-        default: {
-            return global.utils.throwError(this.config.name, threadID, messageID);
-        }
+module.exports.run = async function({
+  api,
+  event,
+  args
+}) {
+  const axios = require('axios');
+  const fs = require('fs');
+  const request = require('request');
+  const cheerio = require('cheerio');
+  const {
+    senderID,
+    threadID,
+    messageID,
+    messageReply,
+    type
+  } = event;
+  var name = args[0];
+  if (type == "message_reply") {
+    var text = messageReply.body;
+  }
+  if (!text && !name) return api.sendMessage('Please reply to the link you want to apply the code to or write the file name to upload the code to pastebin!', threadID, messageID);
+  if (!text && name) {
+    var data = fs.readFile(`${__dirname}/${args[0]}.js`, "utf-8", async (err, data) => {
+      if (err) return api.sendMessage(`Command ${args[0]} does not exist!`, threadID, messageID);
+      const {
+        PasteClient
+      } = require('pastebin-api');
+      const client = new PasteClient("R02n6-lNPJqKQCd5VtL4bKPjuK6ARhHb");
+      async function pastepin(name) {
+        const url = await client.createPaste({
+          code: data,
+          expireDate: 'N',
+          format: "javascript",
+          name: name,
+          publicity: 1
+        });
+        var id = url.split('/')[3];
+        return 'https://pastebin.com/raw/' + id;
+      }
+      var link = await pastepin(args[1] || 'noname');
+      return api.sendMessage(link, threadID, messageID);
+    });
+    return;
+  }
+  var urlR = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+  var url = text.match(urlR);
+  if (url[0].indexOf('pastebin') !== -1) {
+    axios.get(url[0]).then(i => {
+      var data = i.data;
+      fs.writeFile(`${__dirname}/${args[0]}.js`, data, "utf-8", function(err) {
+        if (err) return api.sendMessage(`An error occurred while applying the code ${args[0]}.js`, threadID, messageID);
+        api.sendMessage(`Applied the code to ${args[0]}.js, use command load to use!`, threadID, messageID);
+      });
+    });
+  }
+  if (url[0].indexOf('buildtool') !== -1 || url[0].indexOf('tinyurl.com') !== -1) {
+    const options = {
+      method: 'GET',
+      url: messageReply.body
     };
-    }
+    request(options, function(error, response, body) {
+      if (error) return api.sendMessage('Please only reply to the link (doesnt contain anything other than the link)', threadID, messageID);
+      const load = cheerio.load(body);
+      load('.language-js').each((index, el) => {
+        if (index !== 0) return;
+        var code = el.children[0].data;
+        fs.writeFile(`${__dirname}/${args[0]}.js`, code, "utf-8", function(err) {
+          if (err) return api.sendMessage(`An error occurred while applying the new code to "${args[0]}.js".`, threadID, messageID);
+          return api.sendMessage(`Added this code "${args[0]}.js", use command load to use!`, threadID, messageID);
+        });
+      });
+    });
+    return;
+  }
+}
