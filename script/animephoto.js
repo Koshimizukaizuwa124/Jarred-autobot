@@ -1,63 +1,56 @@
-const axios = require('axios');
 
-module.exports.config = {
-  name: "animephoto",
-  version: "1.0.0",
-  role: 0,
-  credits: "vern",
-  description: "Get a random anime photo using the Rapido API.",
-  usage: "/animephoto",
-  prefix: true,
-  cooldowns: 3,
-  commandCategory: "Fun"
+𝖼𝗈𝗇𝗌𝗍 𝖺𝗑𝗂𝗈𝗌 = 𝗋𝖾𝗊𝗎𝗂𝗋𝖾('𝖺𝗑𝗂𝗈𝗌');
+𝗆𝗈𝖽𝗎𝗅𝖾.𝖾𝗑𝗉𝗈𝗋𝗍𝗌.𝖼𝗈𝗇𝖿𝗂𝗀 = {
+  𝗇𝖺𝗆𝖾: "𝖺𝗇𝗂𝗆𝖾𝗉𝗁𝗈𝗍𝗈",
+  𝗏𝖾𝗋𝗌𝗂𝗈𝗇: "1.0.0",
+  𝗋𝗈𝗅𝖾: 0,
+  𝖼𝗋𝖾𝖽𝗂𝗍𝗌: "𝗏𝖾𝗋𝗇",
+  𝖽𝖾𝗌𝖼𝗋𝗂𝗉𝗍𝗂𝗈𝗇: "𝖦𝖾𝗍 𝖺 𝗋𝖺𝗇𝖽𝗈𝗆 𝖺𝗇𝗂𝗆𝖾 𝗉𝗁𝗈𝗍𝗈 𝗎𝗌𝗂𝗇𝗀 𝗍𝗁𝖾 𝖱𝖺𝗉𝗂𝖽𝗈 𝖠𝖯𝖨.",
+  𝗎𝗌𝖺𝗀𝖾: "/𝖺𝗇𝗂𝗆𝖾𝗉𝗁𝗈𝗍𝗈",
+  𝗉𝗋𝖾𝖿𝗂𝗑: 𝗍𝗋𝗎𝖾,
+  𝖼𝗈𝗈𝗅𝖽𝗈𝗐𝗇𝗌: 3,
+  𝖼𝗈𝗆𝗆𝖺𝗇𝖽𝖢𝖺𝗍𝖾𝗀𝗈𝗋𝗒: "𝖥𝗎𝗇"
 };
+𝗆𝗈𝖽𝗎𝗅𝖾.𝖾𝗑𝗉𝗈𝗋𝗍𝗌.𝗋𝗎𝗇 = 𝖺𝗌𝗒𝗇𝖼 𝖿𝗎𝗇𝖼𝗍𝗂𝗈𝗇 ({ 𝖺𝗉𝗂, 𝖾𝗏𝖾𝗇𝗍 }) {
+  𝖼𝗈𝗇𝗌𝗍 { 𝗍𝗁𝗋𝖾𝖺𝖽𝖨𝖣, 𝗆𝖾𝗌𝗌𝖺𝗀𝖾𝖨𝖣 } = 𝖾𝗏𝖾𝗇𝗍;
+  𝗍𝗋𝗒 {
+    // 𝖲𝖾𝗇𝖽 𝗅𝗈𝖺𝖽𝗂𝗇𝗀 𝗆𝖾𝗌𝗌𝖺𝗀𝖾 𝖿𝗂𝗋𝗌𝗍
+    𝖼𝗈𝗇𝗌𝗍 𝗐𝖺𝗂𝗍𝖬𝗌𝗀 = `════『 𝗔𝗡𝗜𝗠𝗘 𝗣𝗛𝗢𝗧𝗢 』════\𝗇\𝗇` + `🖼️ 𝖥𝖾𝗍𝖼𝗁𝗂𝗇𝗀 𝖺 𝗋𝖺𝗇𝖽𝗈𝗆 𝖺𝗇𝗂𝗆𝖾 𝗉𝗁𝗈𝗍𝗈...\𝗇𝖯𝗅𝖾𝖺𝗌𝖾 𝗐𝖺𝗂𝗍 𝖺 𝗆𝗈𝗆𝖾𝗇𝗍.`;
+    𝖺𝗐𝖺𝗂𝗍 𝖺𝗉𝗂.𝗌𝖾𝗇𝖽𝖬𝖾𝗌𝗌𝖺𝗀𝖾(𝗐𝖺𝗂𝗍𝖬𝗌𝗀, 𝗍𝗁𝗋𝖾𝖺𝖽𝖨𝖣, 𝗆𝖾𝗌𝗌𝖺𝗀𝖾𝖨𝖣);
 
-module.exports.run = async function ({ api, event }) {
-  const { threadID, messageID } = event;
+    // 𝖢𝖺𝗅𝗅 𝗍𝗁𝖾 𝖱𝖺𝗉𝗂𝖽𝗈 𝖠𝗇𝗂𝗆𝖾 𝖯𝗁𝗈𝗍𝗈 𝖠𝖯𝖨
+    𝖼𝗈𝗇𝗌𝗍 𝖺𝗉𝗂𝖴𝗋𝗅 = "𝗁𝗍𝗍𝗉𝗌://𝗋𝖺𝗉𝗂𝖽𝗈.𝗓𝖾𝗍𝗌𝗎.𝗑𝗒𝗓/𝖺𝗉𝗂/𝖺𝗇𝗂𝗆𝖾-𝗉𝗁𝗈𝗍𝗈";
+    𝖼𝗈𝗇𝗌𝗍 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾 = 𝖺𝗐𝖺𝗂𝗍 𝖺𝗑𝗂𝗈𝗌.𝗀𝖾𝗍(𝖺𝗉𝗂𝖴𝗋𝗅);
 
-  try {
-    // Send loading message first
-    const waitMsg = `════『 𝗔𝗡𝗜𝗠𝗘 𝗣𝗛𝗢𝗧𝗢 』════\n\n` +
-      `🖼️ Fetching a random anime photo...\nPlease wait a moment.`;
-    await api.sendMessage(waitMsg, threadID, messageID);
-
-    // Call the Rapido Anime Photo API
-    const apiUrl = "https://rapido.zetsu.xyz/api/anime-photo";
-    const response = await axios.get(apiUrl);
-
-    // Try to get the image URL from the response
-    let imageUrl = "";
-    if (response.data) {
-      if (typeof response.data === "string" && response.data.startsWith("http")) {
-        imageUrl = response.data;
-      } else if (response.data.url) {
-        imageUrl = response.data.url;
-      } else if (response.data.result) {
-        imageUrl = response.data.result;
+    // 𝖳𝗋𝗒 𝗍𝗈 𝗀𝖾𝗍 𝗍𝗁𝖾 𝗂𝗆𝖺𝗀𝖾 𝖴𝖱𝖫 𝖿𝗋𝗈𝗆 𝗍𝗁𝖾 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾
+    𝗅𝖾𝗍 𝗂𝗆𝖺𝗀𝖾𝖴𝗋𝗅 = "";
+    𝗂𝖿 (𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺) {
+      𝗂𝖿 (𝗍𝗒𝗉𝖾𝗈𝖿 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺 === "𝗌𝗍𝗋𝗂𝗇𝗀" && 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺.𝗌𝗍𝖺𝗋𝗍𝗌𝖶𝗂𝗍𝗁("𝗁𝗍𝗍𝗉")) {
+        𝗂𝗆𝖺𝗀𝖾𝖴𝗋𝗅 = 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺;
+      } 𝖾𝗅𝗌𝖾 𝗂𝖿 (𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺.𝗎𝗋𝗅) {
+        𝗂𝗆𝖺𝗀𝖾𝖴𝗋𝗅 = 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺.𝗎𝗋𝗅;
+      } 𝖾𝗅𝗌𝖾 𝗂𝖿 (𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺.𝗋𝖾𝗌𝗎𝗅𝗍) {
+        𝗂𝗆𝖺𝗀𝖾𝖴𝗋𝗅 = 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾.𝖽𝖺𝗍𝖺.𝗋𝖾𝗌𝗎𝗅𝗍;
       }
     }
 
-    if (!imageUrl) {
-      return api.sendMessage(
-        `⚠️ Unable to fetch anime photo.`, threadID, messageID
+    𝗂𝖿 (!𝗂𝗆𝖺𝗀𝖾𝖴𝗋𝗅) {
+      𝗋𝖾𝗍𝗎𝗋𝗇 𝖺𝗉𝗂.𝗌𝖾𝗇𝖽𝖬𝖾𝗌𝗌𝖺𝗀𝖾(
+        `⚠️ 𝖴𝗇𝖺𝖻𝗅𝖾 𝗍𝗈 𝖿𝖾𝗍𝖼𝗁 𝖺𝗇𝗂𝗆𝖾 𝗉𝗁𝗈𝗍𝗈.`,
+        𝗍𝗁𝗋𝖾𝖺𝖽𝖨𝖣,
+        𝗆𝖾𝗌𝗌𝖺𝗀𝖾𝖨𝖣
       );
     }
 
-    // Send the image as an attachment
-    const imageRes = await axios.get(imageUrl, { responseType: "stream" });
-
-    return api.sendMessage({
-      body: `════『 𝗔𝗡𝗜𝗠𝗘 𝗣𝗛𝗢𝗧𝗢 』════\n\nHere's your random anime photo!\n\n> Powered by Rapido`,
-      attachment: imageRes.data
-    }, threadID, messageID);
-
-  } catch (error) {
-    console.error('❌ Error in animephoto command:', error.message || error);
-
-    const errorMessage = `════『 𝗔𝗡𝗜𝗠𝗘 𝗣𝗛𝗢𝗧𝗢 𝗘𝗥𝗥𝗢𝗥 』════\n\n` +
-      `🚫 Failed to fetch anime photo.\nReason: ${error.response?.data?.message || error.message || 'Unknown error'}\n\n` +
-      `> Please try again later.`;
-
-    return api.sendMessage(errorMessage, threadID, messageID);
+    // 𝖲𝖾𝗇𝖽 𝗍𝗁𝖾 𝗂𝗆𝖺𝗀𝖾 𝖺𝗌 𝖺𝗇 𝖺𝗍𝗍𝖺𝖼𝗁𝗆𝖾𝗇𝗍
+    𝖼𝗈𝗇𝗌𝗍 𝗂𝗆𝖺𝗀𝖾𝖱𝖾𝗌 = 𝖺𝗐𝖺𝗂𝗍 𝖺𝗑𝗂𝗈𝗌.𝗀𝖾𝗍(𝗂𝗆𝖺𝗀𝖾𝖴𝗋𝗅, { 𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾𝖳𝗒𝗉𝖾: "𝗌𝗍𝗋𝖾𝖺𝗆" });
+    𝗋𝖾𝗍𝗎𝗋𝗇 𝖺𝗉𝗂.𝗌𝖾𝗇𝖽𝖬𝖾𝗌𝗌𝖺𝗀𝖾({
+      𝖻𝗈𝖽𝗒: `════『 𝗔𝗡𝗜𝗠𝗘 𝗣𝗛𝗢𝗧𝗢 』════\𝗇\𝗇𝖧𝖾𝗋𝖾'𝗌 𝗒𝗈𝗎𝗋 𝗋𝖺𝗇𝖽𝗈𝗆 𝖺𝗇𝗂𝗆𝖾 𝗉𝗁𝗈𝗍𝗈!\𝗇\𝗇> 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖱𝖺𝗉𝗂𝖽𝗈`,
+      𝖺𝗍𝗍𝖺𝖼𝗁𝗆𝖾𝗇𝗍: 𝗂𝗆𝖺𝗀𝖾𝖱𝖾𝗌.𝖽𝖺𝗍𝖺
+    }, 𝗍𝗁𝗋𝖾𝖺𝖽𝖨𝖣, 𝗆𝖾𝗌𝗌𝖺𝗀𝖾𝖨𝖣);
+  } 𝖼𝖺𝗍𝖼𝗁 (𝖾𝗋𝗋𝗈𝗋) {
+    𝖼𝗈𝗇𝗌𝗈𝗅𝖾.𝖾𝗋𝗋𝗈𝗋('❌ 𝖤𝗋𝗋𝗈𝗋 𝗂𝗇 𝖺𝗇𝗂𝗆𝖾𝗉𝗁𝗈𝗍𝗈 𝖼𝗈𝗆𝗆𝖺𝗇𝖽:', 𝖾𝗋𝗋𝗈𝗋.𝗆𝖾𝗌𝗌𝖺𝗀𝖾 || 𝖾𝗋𝗋𝗈𝗋);
+    𝖼𝗈𝗇𝗌𝗍 𝖾𝗋𝗋𝗈𝗋𝖬𝖾𝗌𝗌𝖺𝗀𝖾 = `════『 𝗔𝗡𝗜𝗠𝗘 𝗣𝗛𝗢𝗧𝗢 𝗘𝗥𝗥𝗢𝗥 』════\𝗇\𝗇` + `🚫 𝖥𝖺𝗂𝗅𝖾𝖽 𝗍𝗈 𝖿𝖾𝗍𝖼𝗁 𝖺𝗇𝗂𝗆𝖾 𝗉𝗁𝗈𝗍𝗈.\𝗇𝖱𝖾𝖺𝗌𝗈𝗇: ${𝖾𝗋𝗋𝗈𝗋.𝗋𝖾𝗌𝗉𝗈𝗇𝗌𝖾?.𝖽𝖺𝗍𝖺?.𝗆𝖾𝗌𝗌𝖺𝗀𝖾 || 𝖾𝗋𝗋𝗈𝗋.𝗆𝖾𝗌𝗌𝖺𝗀𝖾 || '𝖴𝗇𝗄𝗇𝗈𝗐𝗇 𝖾𝗋𝗋𝗈𝗋'}\𝗇\𝗇` + `> 𝖯𝗅𝖾𝖺𝗌𝖾 𝗍𝗋𝗒 𝖺𝗀𝖺𝗂𝗇 𝗅𝖺𝗍𝖾𝗋.`;
+    𝗋𝖾𝗍𝗎𝗋𝗇 𝖺𝗉𝗂.𝗌𝖾𝗇𝖽𝖬𝖾𝗌𝗌𝖺𝗀𝖾(𝖾𝗋𝗋𝗈𝗋𝖬𝖾𝗌𝗌𝖺𝗀𝖾, 𝗍𝗁𝗋𝖾𝖺𝖽𝖨𝖣, 𝗆𝖾𝗌𝗌𝖺𝗀𝖾𝖨𝖣);
   }
 };
