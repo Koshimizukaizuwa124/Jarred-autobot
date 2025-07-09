@@ -1,95 +1,44 @@
-const axios = require("axios");
-const fs = require("fs");
-const path = require("path");
-const os = require("os");
-const { createWriteStream } = require("fs");
-const { get } = require("https");
-
 module.exports.config = {
-  name: "pin",
-  version: "1.3.0",
-  hasPermssion: 0,
-  credits: "Aminul Sordar",
-  description: "Search and send Pinterest images",
-  commandCategory: "random-img",
-  usages: "[keyword] - [count]",
-  cooldowns: 5,
-  dependencies: {},
-  envConfig: {
-    APIKEY: "ArYAN"
-  }
+	name: "setname",
+	version: "1.0.1",
+	hasPermssion: 0,
+	credits: "Mirai Team",
+	description: "Đổi biệt danh trong nhóm của bạn hoặc của người bạn tag",
+	commandCategory: "other",
+	usages: "[name] or [@tag] [name]",
+	cooldowns: 3
 };
 
 module.exports.languages = {
-  en: {
-    missingKeyword: "⚠️ Please enter a search keyword.",
-    error: "❌ Error occurred while fetching image.",
-    noResult: "😿 No results found for this query."
-  },
-  vi: {
-    missingKeyword: "⚠️ Please enter a search keyword.",
-    error: "❌ Error occurred while fetching image.",
-    noResult: "😿 No results found for this query."
-  }
+	"vi": {
+		"selfChange": "Đã đổi biệt danh của bạn thành: %1",
+		"targetChange": "Đã đổi biệt danh của %1 thành: %2",
+		"missingName": "Vui lòng nhập biệt danh muốn đặt."
+	},
+	"en": {
+		"selfChange": "Changed your nickname to: %1",
+		"targetChange": "Changed %1's nickname to: %2",
+		"missingName": "Please enter the nickname you want to set."
+	},
+	"ar": {
+		"selfChange": "تم تغيير لقبك إلى: %1",
+		"targetChange": "تم تغيير لقب %1 إلى: %2",
+		"missingName": "من فضلك أدخل اللقب الذي تريد تعيينه."
+	}
 };
 
-// 📥 Download Image and Return Stream
-async function downloadImage(url) {
-  const tempFile = path.join(os.tmpdir(), `${Date.now()}.jpg`);
-  const writer = fs.createWriteStream(tempFile);
+module.exports.run = async function({ api, event, args, getText }) {
+	const name = args.join(" ");
+	if (!name) return api.sendMessage(getText("missingName"), event.threadID, event.messageID);
 
-  return new Promise((resolve, reject) => {
-    get(url, response => {
-      response.pipe(writer);
-      writer.on("finish", () => resolve(fs.createReadStream(tempFile)));
-      writer.on("error", reject);
-    }).on("error", reject);
-  });
-}
+	const mention = Object.keys(event.mentions)[0];
 
-module.exports.onLoad = () => {
-  console.log("✅ pin.js loaded - Powered by Aminul Sordar");
-};
+	if (!mention) {
+		await api.changeNickname(name, event.threadID, event.senderID);
+		return api.sendMessage(getText("selfChange", name), event.threadID, event.messageID);
+	}
 
-module.exports.run = async function ({ api, event, args, getText }) {
-  const input = args.join(" ").split("-");
-  const searchTerm = input[0]?.trim();
-  const count = Math.min(parseInt(input[1]?.trim()) || 1, 50);
-  const apikey = module.exports.config.envConfig.APIKEY;
-
-  if (!searchTerm) {
-    return api.sendMessage(getText("missingKeyword"), event.threadID, event.messageID);
-  }
-
-  try {
-    const res = await axios.get("https://api-aryan-xyz.vercel.app/pin", {
-      params: {
-        search: searchTerm,
-        apikey
-      }
-    });
-
-    const results = res.data?.result;
-    if (!results || results.length === 0) {
-      return api.sendMessage(getText("noResult"), event.threadID, event.messageID);
-    }
-
-    const selected = results.slice(0, count);
-
-    // Download and collect all image streams
-    const attachments = await Promise.all(
-      selected.map(url => downloadImage(url).catch(err => null))
-    );
-
-    const validAttachments = attachments.filter(a => a !== null);
-
-    return api.sendMessage({
-      body: `🎯 Pinterest Image Search\n🔍 Query: ${searchTerm}\n📷 Showing ${validAttachments.length}/${count} image(s)\n🔗 Powered by: api-aryan-xyz.vercel.app`,
-      attachment: validAttachments
-    }, event.threadID, event.messageID);
-
-  } catch (err) {
-    console.error("[PIN ERROR]", err);
-    return api.sendMessage(getText("error"), event.threadID, event.messageID);
-  }
+	const newName = name.replace(event.mentions[mention], "").trim();
+	await api.changeNickname(newName, event.threadID, mention);
+	return api.sendMessage(getText("targetChange", event.mentions[mention].replace(/@/g, "").trim(), newName), event.threadID, event.messageID);
 };
