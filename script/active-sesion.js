@@ -1,4 +1,4 @@
-const fs = require("fs");
+ const fs = require("fs");
 const util = require("util");
 const path = require("path");
 const os = require("os");
@@ -22,7 +22,7 @@ module.exports.config = {
   version: '1.4.0',
   role: 2,
   cooldown: 0,
-  credits: "Jarred",
+  credits: "Vern",
   hasPrefix: false,
   usage: "active-session",
   dependencies: {
@@ -71,7 +71,7 @@ module.exports.run = async function ({ api, event, args }) {
 
   const userCount = userList.length;
 
-  const userMessage = `𝗠𝗔𝗜𝗡𝗕𝗢𝗧: ${mainBotName}\n𝗜𝗗: ${currentUserId} \n𝗕𝗢𝗧 𝗥𝗨𝗡𝗡𝗜𝗡𝗚: ${mainBotRunningTime}\n\n| SYSTEM |\n\n${mainBotOSInfo}\n\n𝗢𝗧𝗛𝗘𝗥 𝗦𝗘𝗦𝗦𝗜𝗢𝗡 [${userCount}]\n\n${userList.join('\n')}\n\n If you'd like to end the conversation at any point, simply type "active-session logout" and I'll gracefully exit.`;
+  const userMessage = `𝗠𝗔𝗜𝗡𝗕𝗢𝗧: ${mainBotName}\n𝗜𝗗: ${currentUserId} \n𝗕𝗢𝗧 𝗥𝗨𝗡𝗡𝗜𝗡𝗚: ${mainBotRunningTime}\n\n| SYSTEM |\n\n${mainBotOSInfo}\n\n〖🤖〗𝗢𝗧𝗛𝗘𝗥 𝗦𝗘𝗦𝗦𝗜𝗢𝗡 [${userCount}]\n\n${userList.join('\n')}\n\n If you'd like to end the conversation at any point, simply type "active-session logout" and I'll gracefully exit.`;
 
   api.sendMessage(userMessage, threadID, messageID);
 };
@@ -121,4 +121,4 @@ function formatBytes(bytes) {
   if (bytes === 0) return '0 Byte';
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return Math.round(100 * (bytes / Math.pow(1024, i))) / 100 + ' ' + sizes[i];
-		  }
+}
