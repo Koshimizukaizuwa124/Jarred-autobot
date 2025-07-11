@@ -1,8 +1,8 @@
-const axios = require('axios');
+ const axios = require('axios');
 const fs = require('fs');
 
 module.exports.config = {
-    name: "goodbyenoti",
+    name: "leave",
     version: "1.0.0",
 };
 
@@ -30,7 +30,7 @@ module.exports.handleEvent = async function ({ api, event }) {
             fs.writeFileSync(filePath, Buffer.from(data));
 
             api.sendMessage({
-                body: `👋 ${name} has left ${groupName}. We’ll miss you!`,
+                body: `👋 ${name} has left ${groupName}. hoy kupal bakit ka nag leave? pero i miss you nalang! ,
                 attachment: fs.createReadStream(filePath)
             }, event.threadID, () => fs.unlinkSync(filePath));
         } catch (error) {
