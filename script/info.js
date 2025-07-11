@@ -5,9 +5,9 @@ module.exports.config = {
   name: "info",
   version: "1.0",
   role: 0,
-  credits: "Kaizenji",
+  credits: "Jarred",
   description: "Get bot and admin information.",
-  cooldown: 5,
+  cooldown: 20,
   hasPrefix: false,
   aliases: ["owner"],
   usage: "info",
@@ -43,7 +43,7 @@ module.exports.run = async function({ api, event, admin }) {
 
     writer.on("finish", () => {
       api.sendMessage({
-        body: `〖🤖〗 ┃ 𝗔𝗨𝗧𝗢𝗕𝗢𝗧 𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡\n\n𝘽𝙊𝙏𝙉𝘼𝙈𝙀: ${botName}\n𝘽𝙊𝙏 𝙁𝘽: facebook.com/${botUid}\n𝘼𝘿𝙈𝙄𝙉 𝙉𝘼𝙈𝙀: ${adminName}\n𝘼𝘿𝙈𝙄𝙉 𝙁𝘽: facebook.com/${admin}\n\n𝘿𝙀𝙑: kaizenji-info.pages.dev`,
+        body: `🌟〘𝓑𝓸𝓽 𝓪𝓷𝓭 𝓸𝔀𝓷𝓮𝓻 𝓲𝓷𝓯𝓸𝓻𝓶𝓪𝓽𝓲𝓸𝓷〙\n\n🤖┊𝗕𝗢𝗧𝗡𝗔𝗠𝗘: ${botName}\n📱┊𝗕𝗢𝗧 𝗙𝗕: facebook.com/${botUid}\n🙎‍♂️┊𝗔𝗗𝗠𝗜𝗡 𝗡𝗔𝗠𝗘: ${adminName}\n📨┊𝗔𝗗𝗠𝗜𝗠 𝗔𝗖𝗖𝗢𝗨𝗡𝗧: facebook.com/${admin}\n\n𝗛𝗘𝗔𝗗 𝗗𝗘𝗩𝗘𝗟𝗢𝗣𝗠𝗘𝗡𝗧: Jarred-info.pages.dev`,
         attachment: fs.createReadStream(outputPath),
       }, tid, () => {
         try {
@@ -61,4 +61,4 @@ module.exports.run = async function({ api, event, admin }) {
   } catch (err) {
     api.sendMessage(`Error: ${err.message}`, tid, mid);
   }
-};
+}; 
